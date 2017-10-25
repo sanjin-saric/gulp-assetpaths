@@ -71,7 +71,7 @@ module.exports = function(opts){
     function ignoreUrl(match){
         var regEx = /((\bhttp|\bhttps):){0,1}\/\//;
         if(regEx.test(match)){
-            if((rootRegEx !== null) && (!rootRegEx.test(match))){
+            if((rootRegEx !== null && rootRegEx !== undefined) && (!rootRegEx.test(match))){
                 return true;
             }
         }
