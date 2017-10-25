@@ -49,12 +49,12 @@ module.exports = function(opts){
             templateCheck: false
         }];
 
-    function isRelative(string, insertIndex){
-        return (string.indexOf('/') === -1 || string.indexOf('/') > insertIndex);
-    }
+	function isRelative(string, insertIndex){
+		return (string.indexOf('/') === -1 || string.indexOf('/') > insertIndex);
+	}
 
 	function setReplacementDomain(string){
-		if(isRelative(opts.oldDomain)){
+		if(isRelative(string)){
 			return new RegExp('(((\\bhttp\|\\bhttps):){0,1}\\/\\/' + string + ')');
 		} else {
 			return new RegExp(string);
