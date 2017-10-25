@@ -5,7 +5,6 @@ var through = require('through2');
 module.exports = function(opts){
 
     'use strict';
-    var rootRegEx;
 
     if (!opts) {
         throw new gutil.PluginError("gulp-assetpaths", "No parameters supplied");
@@ -23,7 +22,9 @@ module.exports = function(opts){
         throw new gutil.PluginError("gulp-assetpaths", "Missing parameter : docRoot");
     }
 
-    var filetypes = new RegExp('.' + opts.filetypes.join('|.'));
+	var rootRegEx = setReplacementDomain('www.somethingthatwillnevershowup');
+
+	var filetypes = new RegExp('.' + opts.filetypes.join('|.'));
     var test = new RegExp(opts.test.join('|'));
 
     var attrsAndProps = [
@@ -51,6 +52,14 @@ module.exports = function(opts){
     function isRelative(string, insertIndex){
         return (string.indexOf('/') === -1 || string.indexOf('/') > insertIndex);
     }
+
+	function setReplacementDomain(string){
+		if(isRelative(opts.oldDomain)){
+			return new RegExp('(((\\bhttp\|\\bhttps):){0,1}\\/\\/' + string + ')');
+		} else {
+			return new RegExp(string);
+		}
+	}
 
     function getInsertIndex(string){
         if(string.search(/^.{0,1}\s*("|')/) !== -1){
